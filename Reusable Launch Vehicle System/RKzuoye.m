@@ -1,0 +1,126 @@
+clear ;close all;clc
+h=0.1;%步长
+X(1,:)=[80000,-6000,200000];%初始值,分别为高度，速度和质量
+t=0;
+g0=9.8;
+M=9*7600*1000;%推力
+M1=2*7600*1000
+M2=7600*1000
+Isp=342;
+Km = 0.1*(-M)/(Isp*g0)
+Km1= 0.1*(-M1)/(Isp*g0)
+Km2= 0.1*(-M2)/(Isp*g0)
+T(1)=0;
+for (i=1:73)
+    X(i+1,3)=X(i,3)+Km
+    Kv1=hj(t,X(i,2),X(i,1),X(i,3));Kr1=hj2(t,X(i,2));
+    Kv2=hj(t+h/2,X(i,2)+(h/2)*Kv1,X(i,3)+(h/2)*Kr1,X(i,3));Kr2=hj2(t,X(i,2)+(h/2)*Kv1);
+    Kv3=hj(t+h/2,X(i,2)+(h/2)*Kv2,X(i,3)+(h/2)*Kr2,X(i,3));Kr3=hj2(t,X(i,2)+(h/2)*Kv2);
+    Kv4=hj(t+h,X(i,2)+h*Kv3,X(i,1)+h*Kr3,X(i,3));Kr4=hj2(t,X(i,2)+h*Kv3);
+    X(i+1,2)=X(i,2)+h/6*(Kv1+2*Kv2+2*Kv3+Kv4);
+    X(i+1,1)=X(i,1)+h/6*(Kr1+2*Kr2+2*Kr3+Kr4);
+    t=t+h;
+    T(i+1)=T(i)+h;
+end
+fprintf('X=\n')
+disp(X)
+for(j=73:679)
+    X(j,3)=X(73,3);
+    Kv1=hj1(t,X(j,2),X(j,1),X(j,3));Kr1=hj2(t,X(j,2));
+    Kv2=hj1(t+h/2,X(j,2)+(h/2)*Kv1,X(j,3)+(h/2)*Kr1,X(j,3));Kr2=hj2(t,X(j,2)+(h/2)*Kv1);
+    Kv3=hj1(t+h/2,X(j,2)+(h/2)*Kv2,X(j,3)+(h/2)*Kr2,X(j,3));Kr3=hj2(t,X(j,2)+(h/2)*Kv2);
+    Kv4=hj1(t+h,X(j,2)+h*Kv3,X(j,1)+h*Kr3,X(j,3));Kr4=hj2(t,X(j,2)+h*Kv3);
+    X(j+1,2)=X(j,2)+h/6*(Kv1+2*Kv2+2*Kv3+Kv4);
+    X(j+1,1)=X(j,1)+h/6*(Kr1+2*Kr2+2*Kr3+Kr4);
+    t=t+h;
+    T(j+1)=T(j)+h;
+end
+fprintf('X=\n');
+disp(X);
+for (i=679:693)
+    X(i+1,3)=X(i,3)+Km1
+    Kv1=hj3(t,X(i,2),X(i,1),X(i,3));Kr1=hj2(t,X(i,2));
+    Kv2=hj3(t+h/2,X(i,2)+(h/2)*Kv1,X(i,3)+(h/2)*Kr1,X(i,3));Kr2=hj2(t,X(i,2)+(h/2)*Kv1);
+    Kv3=hj3(t+h/2,X(i,2)+(h/2)*Kv2,X(i,3)+(h/2)*Kr2,X(i,3));Kr3=hj2(t,X(i,2)+(h/2)*Kv2);
+    Kv4=hj3(t+h,X(i,2)+h*Kv3,X(i,1)+h*Kr3,X(i,3));Kr4=hj2(t,X(i,2)+h*Kv3);
+    X(i+1,2)=X(i,2)+h/6*(Kv1+2*Kv2+2*Kv3+Kv4);
+    X(i+1,1)=X(i,1)+h/6*(Kr1+2*Kr2+2*Kr3+Kr4);
+    t=t+h;
+    T(i+1)=T(i)+h;
+end
+fprintf('X=\n')
+disp(X)
+for(j=693:733)
+    X(j,3)=X(693,3);
+    Kv1=hj1(t,X(j,2),X(j,1),X(j,3));Kr1=hj2(t,X(j,2));
+    Kv2=hj1(t+h/2,X(j,2)+(h/2)*Kv1,X(j,3)+(h/2)*Kr1,X(j,3));Kr2=hj2(t,X(j,2)+(h/2)*Kv1);
+    Kv3=hj1(t+h/2,X(j,2)+(h/2)*Kv2,X(j,3)+(h/2)*Kr2,X(j,3));Kr3=hj2(t,X(j,2)+(h/2)*Kv2);
+    Kv4=hj1(t+h,X(j,2)+h*Kv3,X(j,1)+h*Kr3,X(j,3));Kr4=hj2(t,X(j,2)+h*Kv3);
+    X(j+1,2)=X(j,2)+h/6*(Kv1+2*Kv2+2*Kv3+Kv4);
+    X(j+1,1)=X(j,1)+h/6*(Kr1+2*Kr2+2*Kr3+Kr4);
+    t=t+h;
+    T(j+1)=T(j)+h;
+end
+fprintf('X=\n');
+disp(X);
+for (i=733:739)
+    X(i+1,3)=X(i,3)+Km1
+    Kv1=hj3(t,X(i,2),X(i,1),X(i,3));Kr1=hj2(t,X(i,2));
+    Kv2=hj3(t+h/2,X(i,2)+(h/2)*Kv1,X(i,3)+(h/2)*Kr1,X(i,3));Kr2=hj2(t,X(i,2)+(h/2)*Kv1);
+    Kv3=hj3(t+h/2,X(i,2)+(h/2)*Kv2,X(i,3)+(h/2)*Kr2,X(i,3));Kr3=hj2(t,X(i,2)+(h/2)*Kv2);
+    Kv4=hj3(t+h,X(i,2)+h*Kv3,X(i,1)+h*Kr3,X(i,3));Kr4=hj2(t,X(i,2)+h*Kv3);
+    X(i+1,2)=X(i,2)+h/6*(Kv1+2*Kv2+2*Kv3+Kv4);
+    X(i+1,1)=X(i,1)+h/6*(Kr1+2*Kr2+2*Kr3+Kr4);
+    t=t+h;
+    T(i+1)=T(i)+h;
+end
+fprintf('X=\n')
+disp(X)
+for(j=739:745)
+    X(j,3)=X(739,3);
+    Kv1=hj1(t,X(j,2),X(j,1),X(j,3));Kr1=hj2(t,X(j,2));
+    Kv2=hj1(t+h/2,X(j,2)+(h/2)*Kv1,X(j,3)+(h/2)*Kr1,X(j,3));Kr2=hj2(t,X(j,2)+(h/2)*Kv1);
+    Kv3=hj1(t+h/2,X(j,2)+(h/2)*Kv2,X(j,3)+(h/2)*Kr2,X(j,3));Kr3=hj2(t,X(j,2)+(h/2)*Kv2);
+    Kv4=hj1(t+h,X(j,2)+h*Kv3,X(j,1)+h*Kr3,X(j,3));Kr4=hj2(t,X(j,2)+h*Kv3);
+    X(j+1,2)=X(j,2)+h/6*(Kv1+2*Kv2+2*Kv3+Kv4);
+    X(j+1,1)=X(j,1)+h/6*(Kr1+2*Kr2+2*Kr3+Kr4);
+    t=t+h;
+    T(j+1)=T(j)+h;
+end
+fprintf('X=\n');
+disp(X);
+for (i=745:748)
+    X(i+1,3)=X(i,3)+Km2
+    Kv1=hj4(t,X(i,2),X(i,1),X(i,3));Kr1=hj2(t,X(i,2));
+    Kv2=hj4(t+h/2,X(i,2)+(h/2)*Kv1,X(i,3)+(h/2)*Kr1,X(i,3));Kr2=hj2(t,X(i,2)+(h/2)*Kv1);
+    Kv3=hj4(t+h/2,X(i,2)+(h/2)*Kv2,X(i,3)+(h/2)*Kr2,X(i,3));Kr3=hj2(t,X(i,2)+(h/2)*Kv2);
+    Kv4=hj4(t+h,X(i,2)+h*Kv3,X(i,1)+h*Kr3,X(i,3));Kr4=hj2(t,X(i,2)+h*Kv3);
+    X(i+1,2)=X(i,2)+h/6*(Kv1+2*Kv2+2*Kv3+Kv4);
+    X(i+1,1)=X(i,1)+h/6*(Kr1+2*Kr2+2*Kr3+Kr4);
+    t=t+h;
+    T(i+1)=T(i)+h;
+end
+fprintf('X=\n')
+disp(X)
+for(j=748:1000)
+    X(j,3)=X(748,3);
+    Kv1=hj1(t,X(j,2),X(j,1),X(j,3));Kr1=hj2(t,X(j,2));
+    Kv2=hj1(t+h/2,X(j,2)+(h/2)*Kv1,X(j,3)+(h/2)*Kr1,X(j,3));Kr2=hj2(t,X(j,2)+(h/2)*Kv1);
+    Kv3=hj1(t+h/2,X(j,2)+(h/2)*Kv2,X(j,3)+(h/2)*Kr2,X(j,3));Kr3=hj2(t,X(j,2)+(h/2)*Kv2);
+    Kv4=hj1(t+h,X(j,2)+h*Kv3,X(j,1)+h*Kr3,X(j,3));Kr4=hj2(t,X(j,2)+h*Kv3);
+    X(j+1,2)=X(j,2)+h/6*(Kv1+2*Kv2+2*Kv3+Kv4);
+    X(j+1,1)=X(j,1)+h/6*(Kr1+2*Kr2+2*Kr3+Kr4);
+    t=t+h;
+    T(j+1)=T(j)+h;
+end
+fprintf('X=\n');
+disp(X);
+figure;
+plot(T,X(:,1),'b-');
+xlabel('时间t/s');legend('r高度');ylabel('高度m')
+figure;
+plot(T,X(:,2),'g--');
+xlabel('时间t/s');legend('v速度');ylabel('速度m/s')
+figure;
+plot(T,X(:,3),'m-.')
+xlabel('时间t/s');legend('m质量');ylabel('质量kg')
